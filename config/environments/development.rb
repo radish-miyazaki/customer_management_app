@@ -60,5 +60,6 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
+  # 172.16.0.0から172.31.255.255のアドレスをホワイトリストに追加する
   config.web_console.whitelisted_ips = ["172.16.0.0/12"]
 end
