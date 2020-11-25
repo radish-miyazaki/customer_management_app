@@ -27,9 +27,11 @@ describe Staff::Authenticator do
       expect(Staff::Authenticator.new(m).authenticator("password")).to be_falsey
     end
 
-    example "無効フラグ(suspected)が立っていたらfalseを返す" do
+    # example "無効フラグ(suspected)が立っていたらfalseを返す" do
+    example "無効フラグが立っていてもtrueを返す" do
       m = build(:staff_member, suspected: true)
-      expect(Staff::Authenticator.new(m).authenticator("password")).to be_falsey
+      # expect(Staff::Authenticator.new(m).authenticator("password")).to be_falsey
+      expect(Staff::Authenticator.new(m).authenticator("password")).to be_truthy
     end
   end
   

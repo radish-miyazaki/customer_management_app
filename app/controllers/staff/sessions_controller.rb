@@ -23,9 +23,15 @@ class Staff::SessionsController < Staff::Base
 
     # 同じemailが存在した場合の処理
     if Staff::Authenticator.new(staff_member).authenticator(@form.password)
-      session[:staff_member_id] = staff_member.id # 仮実装（バリデーションなし）
-      flash.notice = "ログインしました。"
-      redirect_to :staff_root
+      # 無効フラグがtrueの場合
+      if staff_member.suspected?
+        flash.now.alert = "アカウントが停止されています。"
+        render action: "new"
+      else
+        session[:staff_member_id] = staff_member.id
+        flash.notice = "ログインしました。"
+        redirect_to :staff_root
+      end
     else
       flash.now.alert = "メールアドレスまたはパスワードが正しくありません。"
       render action: "new"
