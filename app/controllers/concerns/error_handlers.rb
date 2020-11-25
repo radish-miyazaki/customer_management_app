@@ -1,5 +1,8 @@
 module ErrorHandles
+
+  ## Concernディレクトリ内では必ずextendする
   extend ActiveSupport::Concern
+  
   included do
     # 例外が発生した場合、rescue500メソッドに処理を任せる
     ## ただし、RailsガイドではStandardErrorをcatchするのを避けるように明示してある
