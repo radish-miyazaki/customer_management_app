@@ -12,6 +12,8 @@
   <body>
     <div class="wrapper">
       <%= render "staff/shared/header" %>
+      <%= content_tag(:div, flash.notice, class: "alert alert-success w-auto") if flash.notice %>
+      <%= content_tag(:div, flash.alert, class: "alert alert-danger w-auto") if flash.alert %>
       <div class="container">
         <%= yield %>
       </div>
