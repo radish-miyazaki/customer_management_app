@@ -1,0 +1,12 @@
+<% @title = "職員情報の更新" %>
+<h2 class="my-4"><%= @title %></h2>
+
+<div>
+  <%= form_with model: @staff_member, class: "card bg-light px-5 py-2" ,url: [:admin, @staff_member] do |f| %>
+    <%= render "form", f: f %>
+    <div class="mb-3 ml-3">
+      <%= f.submit "更新", class: "btn btn-primary" %>
+      <%= link_to "キャンセル", :admin_staff_members, class: "btn btn-danger ml-3" %>
+    </div>
+  <% end %>
+</div>
