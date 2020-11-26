@@ -1,16 +1,28 @@
 Rails.application.routes.draw do
-  namespace :staff do
-    root 'top#index'
-    get "login" => "sessions#new", as: :login
-    post "session" => "sessions#create", as: :session
-    delete "session" => "sessions#destroy"
+  config = Rails.application.config.cms
+
+  # config/cms.rbファイル内で指定したホスト名で
+  # アクセスされたときのみ職員トップページが表示される
+  constraints host: config[:staff][:host] do
+    namespace :staff, path: config[:staff][:path] do
+      root 'top#index'
+      get "login" => "sessions#new", as: :login
+      resource :session, only: [ :create, :destroy ]
+
+      # 職員が自分自身を管理するためのルーティング
+      resource :account, expect: [ :new, :create, :destroy ] # 職員自身は自分のアカウントを削除・更新・作成できない
+    end
   end
 
-  namespace :admin do
-    root 'top#index'
-    get "login" => "sessions#new", as: :login
-    post "session" => "sessions#create", as: :session
-    delete "session" => "sessions#destroy"
+  constraints host: config[:admin][:host] do
+    namespace :admin, path: config[:admin][:path] do
+      root 'top#index'
+      get "login" => "sessions#new", as: :login
+      resource :session, only: [ :create, :destroy ]
+
+      # 管理者が職員(staff)を管理するためのルーティング
+      resources :staff_members
+    end
   end
 
   namespace :customer do
