@@ -11,7 +11,7 @@ class Staff::SessionsController < Staff::Base
 
   def create
     # インスタンス変数の各属性の値を代入する
-    @form = Staff::LoginForm.new(params[:staff_login_form])
+    @form = Staff::LoginForm.new(login_form_params)
 
     # email属性の値が存在する場合
     if @form.email.present?
@@ -43,5 +43,10 @@ class Staff::SessionsController < Staff::Base
     flash.notice = "ログアウトしました。"
     redirect_to :staff_root
   end
+
+  private
+    def login_form_params
+      params.require(:staff_login_form).params(:email, :password)
+    end
   
 end
