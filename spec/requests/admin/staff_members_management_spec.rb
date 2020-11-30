@@ -1,7 +1,23 @@
 require 'rails_helper'
 
 describe '管理者による職員管理' do
+  context "ログイン前" do
+    include_examples "a protected admin controller", "admin/staff_members"
+  end
+end
+
+describe '管理者による職員管理' do
   let(:administrator) { create(:administrator) }
+
+  before do
+    post admin_session_url,
+      params: {
+        admin_login_form: {
+          email: administrator.email,
+          password: "password"
+        }
+      }
+  end
 
   describe '新規登録' do
     let(:params_hash) { attributes_for(:staff_member) }
@@ -36,4 +52,23 @@ describe '管理者による職員管理' do
       }.not_to change { staff_member.hashed_password.to_s }
     end
   end
+
+  describe "一覧" do
+    example "成功" do
+      get admin_staff_members_url
+      expect(response.status).to eq(200)
+    end
+    
+    example "無効フラグがtrueだったら強制的にログアウト" do
+      administrator.update_column(:suspended, true)
+      get admin_staff_members_url
+      expect(response).to redirect_to(admin_root_url)
+    end
+
+    example "セッションタイムアウト" do
+      travel_to Staff::Base::TIMEOUT.from_now.advance(seconds: 1)
+      get admin_staff_members_url
+    end
+  end
+  
 end

@@ -9,4 +9,11 @@ class StaffMember < ApplicationRecord
       self.hashed_password = nil
     end
   end
+
+  # システムへアクセスできるかどうかを調べる
+  def active?
+    !suspected &&   # 無効フラグがtrueではないか
+    start_date <= Date.today &&  # 入社日が今日より後ではないか
+    (end_date.nil? || end_date > Date.today) # 終了日がnil、または今日より後であるか
+  end
 end

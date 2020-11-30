@@ -1,6 +1,13 @@
 require 'rails_helper'
 
 describe "職員によるアカウント管理" do
+  context "ログイン前" do
+    include_examples "a protected singular staff controller", "staff/accounts"
+  end
+end
+
+
+describe "職員によるアカウント管理" do
 
   before do
     # 職員がログインフォームに自分のemailとpwを入力して、フォームを送信する
@@ -12,6 +19,29 @@ describe "職員によるアカウント管理" do
         }
       }
   end
+
+  describe "情報表示" do
+    let(:staff_member) { create(:staff_member) }
+
+    example "成功" do
+      get staff_account_url
+      expect(response.status).to eq(200)
+    end
+
+    example "停止フラグがセットされたら強制的にログアウト" do
+      staff_member.update_column(:suspected, true)
+      get staff_account_url
+      expect(response).to redirect_to(staff_root_url)
+    end
+
+    example "セッションタイムアウト" do
+      # 現在の時刻を60分1秒後の時刻にする
+      travel_to Staff::Base::TIMEOUT.from_now.advance(seconds: 1)
+      get staff_account_url
+      expect(response).to redirect_to(staff_login_url)
+    end
+  end
+
   describe "更新" do
     let(:params_hash) { attributes_for(:staff_member) }
     let(:staff_member) { create(:staff_member) }
@@ -37,4 +67,5 @@ describe "職員によるアカウント管理" do
       }.not_to change { staff_member.end_date }
     end
   end
+  
 end
