@@ -9,6 +9,6 @@ class CreateStaffEvents < ActiveRecord::Migration[6.0]
     end
 
     add_index :staff_events, :created_at # 発生時刻順にソートするためのインデックス
-    add_index :staff_events, [ :staff_member_id, :created_at ] # イベントごとのリストを発生時刻順にソートするためのインデックス
+    add_index :staff_events, [:staff_member_id, :created_at] # イベントごとのリストを発生時刻順にソートするためのインデックス
   end
 end

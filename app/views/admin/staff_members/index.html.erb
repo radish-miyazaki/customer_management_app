@@ -29,6 +29,7 @@
           <%= link_to "編集", [:edit, :admin, m], class: "btn btn-primary btn-sm" %>
           <%= link_to "削除", [:admin, m], method: :delete,
                 data: { confirm: "本当に削除しますか？"}, class: "btn btn-danger btn-sm" %>
+          <%= link_to 'Events', [:admin, m, :staff_events], class: "btn btn-info btn-sm" %>
         </td>
       </tr>
       <% end %>

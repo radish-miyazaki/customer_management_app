@@ -21,7 +21,10 @@ Rails.application.routes.draw do
       resource :session, only: [ :create, :destroy ]
 
       # 管理者が職員(staff)を管理するためのルーティング
-      resources :staff_members
+      resources :staff_members do
+        resources :staff_events, only: [:index] # 特定の職員の記録を見る
+      end
+        resources :staff_events, only: [:index] # すべての職員の記録を見る
     end
   end
 

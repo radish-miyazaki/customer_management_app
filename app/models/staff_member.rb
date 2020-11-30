@@ -1,6 +1,6 @@
 class StaffMember < ApplicationRecord
 
-  has_many :events, class_name: 'StaffEvent', dependent: :destroy
+  has_many :events, class_name: "StaffEvent", dependent: :destroy
 
   # 与えられた文字列をハッシュ化し返す
   # nilの場合はそのままnilを返す
