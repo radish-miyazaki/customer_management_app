@@ -2,6 +2,7 @@
   <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" href="#">顧客管理システム</a>
     <form class="form-inline">
+      <%= link_to "アカウント", :staff_account, class: "mr-3 btn btn-primary" if current_staff_member %>
       <%=
         if current_staff_member
           link_to "ログアウト", :staff_session, method: :delete, class: "btn btn-outline-success my-2 my-sm-0" 

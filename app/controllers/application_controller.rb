@@ -9,13 +9,13 @@ class ApplicationController < ActionController::Base
   include ErrorHandlers if Rails.env.production?
 
   # ユーザごとにレイアウトを変更する
-  private
-    def set_layout
-      if params[:controller].match(%r{\A(staff|customer|admin)/})
-        Regexp.last_match[1]
-      else
-        "customer"
-      end
+  private 
+  def set_layout
+    if params[:controller].match(%r{\A(staff|customer|admin)/})
+      Regexp.last_match[1]
+    else
+      "customer"
     end
+  end
 
 end

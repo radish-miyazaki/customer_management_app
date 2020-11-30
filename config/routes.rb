@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       resource :session, only: [ :create, :destroy ]
 
       # 職員が自分自身を管理するためのルーティング
-      resource :account, expect: [ :new, :create, :destroy ] # 職員自身は自分のアカウントを削除・更新・作成できない
+      resource :account, except: [ :new, :create, :destroy ] # 職員自身は自分のアカウントを削除・更新・作成できない
     end
   end
 
