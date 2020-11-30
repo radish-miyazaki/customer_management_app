@@ -1,0 +1,29 @@
+<div class="form-group">
+  <%= f.label :email, "メールアドレス", class: "mt-2" %>
+  <span class="badge badge-danger ml-2">必須</span>
+  <%= f.email_field :email, required: true, class: "form-control" %>
+</div>
+<div class="form-group">
+  <%= f.label :family_name, "氏名" %>
+  <span class="badge badge-danger ml-2">必須</span>
+  <div class="row">
+    <div class="col">
+      <%= f.text_field :family_name, required: true, class: "form-control" %>
+    </div>
+    <div class="col">
+      <%= f.text_field :given_name, required: true, class: "form-control" %>
+    </div>
+  </div>
+</div>
+<div class="form-group">
+  <%= f.label :family_name_kana, "フリガナ" %>
+  <span class="badge badge-danger ml-2">必須</span>
+  <div class="row">
+    <div class="col">
+      <%= f.text_field :family_name_kana, required: true, class: "form-control" %>
+    </div>
+    <div class="col">
+      <%= f.text_field :given_name_kana, required: true, class: "form-control"%>
+    </div>
+  </div>
+</div>
