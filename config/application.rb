@@ -22,5 +22,7 @@ module Apps
       g.controller_specs  false
       g.view_spaces       false
     end
+    # 入力フォームバリデーションエラー時にタグを自動挿入しない
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
   end
 end
