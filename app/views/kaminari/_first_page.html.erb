@@ -1,7 +1,5 @@
 <li class="page-item page-link">
   <%= link_to_unless(current_page.first?,
-  t("views.pagination.first").html_safe, url) do |name|
-    content_tag(:span, name, class: "disabled")
-  end
+  t("views.pagination.first").html_safe, url)
   %>
 </li>
