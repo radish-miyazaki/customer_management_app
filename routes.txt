@@ -7,10 +7,15 @@
                         staff_account GET    /account(.:format)                                                                       staff/accounts#show {:host=>"cms.example.com"}
                                       PATCH  /account(.:format)                                                                       staff/accounts#update {:host=>"cms.example.com"}
                                       PUT    /account(.:format)                                                                       staff/accounts#update {:host=>"cms.example.com"}
+                  edit_staff_password GET    /password/edit(.:format)                                                                 staff/passwords#edit {:host=>"cms.example.com"}
+                       staff_password GET    /password(.:format)                                                                      staff/passwords#show {:host=>"cms.example.com"}
+                                      PATCH  /password(.:format)                                                                      staff/passwords#update {:host=>"cms.example.com"}
+                                      PUT    /password(.:format)                                                                      staff/passwords#update {:host=>"cms.example.com"}
                            admin_root GET    /admin(.:format)                                                                         admin/top#index {:host=>"cms.example.com"}
                           admin_login GET    /admin/login(.:format)                                                                   admin/sessions#new {:host=>"cms.example.com"}
                         admin_session DELETE /admin/session(.:format)                                                                 admin/sessions#destroy {:host=>"cms.example.com"}
                                       POST   /admin/session(.:format)                                                                 admin/sessions#create {:host=>"cms.example.com"}
+      admin_staff_member_staff_events GET    /admin/staff_members/:staff_member_id/staff_events(.:format)                             admin/staff_events#index {:host=>"cms.example.com"}
                   admin_staff_members GET    /admin/staff_members(.:format)                                                           admin/staff_members#index {:host=>"cms.example.com"}
                                       POST   /admin/staff_members(.:format)                                                           admin/staff_members#create {:host=>"cms.example.com"}
                new_admin_staff_member GET    /admin/staff_members/new(.:format)                                                       admin/staff_members#new {:host=>"cms.example.com"}
@@ -19,6 +24,7 @@
                                       PATCH  /admin/staff_members/:id(.:format)                                                       admin/staff_members#update {:host=>"cms.example.com"}
                                       PUT    /admin/staff_members/:id(.:format)                                                       admin/staff_members#update {:host=>"cms.example.com"}
                                       DELETE /admin/staff_members/:id(.:format)                                                       admin/staff_members#destroy {:host=>"cms.example.com"}
+                   admin_staff_events GET    /admin/staff_events(.:format)                                                            admin/staff_events#index {:host=>"cms.example.com"}
                         customer_root GET    /mypage(.:format)                                                                        customer/top#index {:host=>"example.com"}
         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
            rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create

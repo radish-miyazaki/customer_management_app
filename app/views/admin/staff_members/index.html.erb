@@ -18,20 +18,21 @@
     </thead>
     <tbody>
       <% @staff_members.each do |m| %>
-      <tr>
-        <td class="align-middle"><%= m.family_name %> <%= m.given_name %></td>
-        <td class="align-middle"><%= m.family_name_kana %> <%= m.given_name_kana %></td>
-        <td class="align-middle"><%= m.email %></td>
-        <td class="text-center align-middle"><%= m.start_date.strftime("%Y/%m/%d") %></td>
-        <td class="text-center align-middle"><%= m.end_date.try(:strftime, "%Y/%m/%d") %></td>
-        <td class="text-center align-middle"><%= m.suspected? ? raw("&#x2611;") : raw("&#x2610;") %></td>
-        <td class="text-center align-middle">
-          <%= link_to "編集", [:edit, :admin, m], class: "btn btn-primary btn-sm" %>
-          <%= link_to "削除", [:admin, m], method: :delete,
-                data: { confirm: "本当に削除しますか？"}, class: "btn btn-danger btn-sm" %>
-          <%= link_to 'Events', [:admin, m, :staff_events], class: "btn btn-info btn-sm" %>
-        </td>
-      </tr>
+        <% p = StaffMemberPresenter.new(m, self) %>
+        <tr>
+          <td class="align-middle"><%= m.family_name %> <%= m.given_name %></td>
+          <td class="align-middle"><%= m.family_name_kana %> <%= m.given_name_kana %></td>
+          <td class="align-middle"><%= m.email %></td>
+          <td class="text-center align-middle"><%= m.start_date.strftime("%Y/%m/%d") %></td>
+          <td class="text-center align-middle"><%= m.end_date.try(:strftime, "%Y/%m/%d") %></td>
+          <td class="text-center align-middle"><%= p.suspected_mark %></td>
+          <td class="text-center align-middle">
+            <%= link_to "編集", [:edit, :admin, m], class: "btn btn-primary btn-sm" %>
+            <%= link_to "削除", [:admin, m], method: :delete,
+                  data: { confirm: "本当に削除しますか？"}, class: "btn btn-danger btn-sm" %>
+            <%= link_to 'Events', [:admin, m, :staff_events], class: "btn btn-info btn-sm" %>
+          </td>
+        </tr>
       <% end %>
     </tbody>
   </table>
