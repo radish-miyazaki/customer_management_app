@@ -3,7 +3,8 @@
 
 <div>
   <div class="text-right">
-    <%= link_to "編集する", :edit_staff_account, class: "btn btn-info" %>
+    <%= link_to "パスワード変更", :edit_staff_password, class: "btn btn-warning text-white" %>
+    <%= link_to "編集", :edit_staff_account, class: "btn btn-info" %>
   </div>
 
   <table class="table table-striped my-3 table-hover">
@@ -24,6 +25,10 @@
     <tr>
       <th>メールアドレス</th>
       <td><%= @staff_member.email %></td>
+    </tr>
+    <tr>
+      <th>パスワード</th>
+      <td>********************</td>
     </tr>
     <tr>
       <th>入社日</th>

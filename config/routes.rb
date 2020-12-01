@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
       # 職員が自分自身を管理するためのルーティング
       resource :account, except: [ :new, :create, :destroy ] # 職員自身は自分のアカウントを削除・更新・作成できない
+      resource :password, only: [ :show, :edit, :update ] # 職員自身がパスワードを変更する
     end
   end
 
