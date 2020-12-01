@@ -7,32 +7,32 @@
   end
 %>
 
-<h2><%= @title %></h2>
+<h3 class="mt-4"><%= @title %></h3>
 
 <div>
-  <div>
-    <%= link_to "職員一覧", :admin_staff_members %>
+  <div class="text-right">
+    <%= link_to "職員一覧", :admin_staff_members, class: "btn btn-info" %>
   </div>
 </div>
 
-<table>
-  <tr>
-    <% unless @staff_member %>
-      <th>氏名</th>
-    <% end %>
-    <th>種別</th>
-    <th>日時</th>
-  </tr>
-  <%= render partial: "event", collection: @events %>
-  <% if @events.empty? %>
+<table class="table table-hover table-striped mt-3">
+  <thead class="thead-dark text-center">
     <tr>
-      <%= content_tag(:td, "記録がありません", colspan: @staff_member ? 2 : 3) %>
+      <% unless @staff_member %>
+        <th>氏名</th>
+      <% end %>
+      <th>種別</th>
+      <th>日時</th>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <%= render partial: "event", collection: @events %>
+    <% if @events.empty? %>
+      <tr class="text-center">
+        <%= content_tag(:td, "記録がありません", colspan: @staff_member ? 2 : 3) %>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
-<div>
-  <div>
-    <%= link_to "職員一覧", :admin_staff_members %>
-  </div>
-</div>
+<%= paginate @events %>

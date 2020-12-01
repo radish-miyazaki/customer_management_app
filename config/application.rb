@@ -10,7 +10,7 @@ module Apps
     
     # タイムゾーンとロケールの設定
     config.time_zone = "Tokyo"
-    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb.yml}").to_s]
+    config.i18n.load_path += Dir[Rails.root.join("config", "locales", "**", "*.{rb,yml}").to_s]
     config.i18n.default_locale = :ja
   
     # generatorコマンド実行時の自動生成ファイルを制限する

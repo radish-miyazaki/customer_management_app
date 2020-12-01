@@ -2,7 +2,8 @@
   <% unless @staff_member %>
     <td>
       <%= link_to(event.member.family_name + event.member.given_name,
-                  [ :admin, event_member, :staff_events]) %>
+                  [ :admin, event.member, :staff_events],
+                    class: "text-decoration-none") %>
     </td>
   <% end %>
   <td><%= event.description %></td>
