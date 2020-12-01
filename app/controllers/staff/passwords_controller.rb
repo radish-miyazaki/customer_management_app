@@ -23,6 +23,6 @@ class Staff::PasswordsController < Staff::Base
   private
   def staff_member_params
     params.require(:staff_change_password_form).permit(
-      :current_password, :new_password, :new_password_confirm)
+      :current_password, :new_password, :new_password_confirmation)
   end
 end
