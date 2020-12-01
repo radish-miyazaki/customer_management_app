@@ -1,49 +1,17 @@
-<div class="form-group">
-  <%= f.label :email, "メールアドレス", class: "mt-2 ml-2" %>
-  <span class="badge badge-danger ml-2">必須</span>
-  <%= f.text_field :email, required: true, class: "form-control" %>
-</div>
-<% if f.object.new_record? %>
-  <div class="form-group">
-    <%= f.label :password, "パスワード", class: "ml-2" %>
-    <span class="badge badge-danger ml-2">必須</span>
-    <%= f.password_field :password, required: true, class: "form-control" %>
-  </div>
-<% end %>
-<div class="form-group">
-  <%= f.label :family_name, "氏名", class: "ml-2" %>
-  <span class="badge badge-danger ml-2">必須</span>
-  <div class="row">
-    <div class="col">
-      <%= f.text_field :family_name, required: true, class: "form-control" %>
-    </div>
-    <div class="col">
-      <%= f.text_field :given_name, required: true, class: "form-control" %>
-    </div>
-  </div>
-</div>
-<div class="form-group">
-  <%= f.label :family_name_kana, "フリガナ", class: "ml-2" %>
-  <span class="badge badge-danger ml-2">必須</span>
-  <div class="row">
-    <div class="col">
-      <%= f.text_field :family_name_kana, required: true, class: "form-control" %>
-    </div>
-    <div class="col">
-      <%= f.text_field :given_name_kana, required: true, class: "form-control" %>
-    </div>
-  </div>
-</div>
-<div class="form-group">
-  <%= f.label :start_date, "入社日", class: "ml-2" %>
-  <span class="badge badge-danger ml-2">必須</span>
-  <%= f.date_field :start_date, required: true, class: "form-control" %>
-</div>
-<div class="form-group">
-  <%= f.label :end_date, "退職日", class: "ml-2" %>
-  <%= f.date_field :end_date, class: "form-control" %>
-</div>
-<div class="form-group form-check">
-  <%= f.check_box :suspected %>
-  <%= f.label :suspected, "アカウント停止" %>
-</div>
+<%= markup do |m| 
+  p = StaffMemberFormPresenter.new(f, self)
+  m << p.text_field_block(:email, "メールアドレス", { required: true, class: "form-control"})
+
+  if f.object.new_record?
+    m << p.password_field_block(:password, "パスワード", { required: true, class: "form-control"})
+  end
+
+  p.with_options(required: true, class: "form-control") do |q|
+    m << q.full_name_block(:family_name, :given_name, "氏名")
+    m << q.full_name_block(:family_name_kana, :given_name_kana, "フリガナ")
+    m << q.date_field_block(:start_date, "入社日")
+    m << q.date_field_block(:end_date, "退職日", required: false)
+  end
+
+  m << p.suspected_check_box
+end %>

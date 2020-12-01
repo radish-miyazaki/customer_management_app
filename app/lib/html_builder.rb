@@ -1,7 +1,7 @@
 # nokogiriを利用して、HTML文書の断片を生成する
 module HtmlBuilder
   def markup(tag_name = nil, options = {})
-    root = Nokogiri::HTML::DocumentFragment.parse("")
+    root = Nokogiri::HTML::DocumentFragment.parse('')
     Nokogiri::HTML::Builder.with(root) do |doc|
       if tag_name
         doc.method_missing(tag_name, options) do
