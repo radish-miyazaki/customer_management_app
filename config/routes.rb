@@ -14,7 +14,7 @@ Rails.application.routes.draw do
       resource :password, only: [ :show, :edit, :update ] # 職員自身がパスワードを変更する
       
       # 職員が顧客情報を管理するためのルーティング
-      resouces :customers
+      resources :customers
     end
   end
 
