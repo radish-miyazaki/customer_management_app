@@ -12,6 +12,9 @@ Rails.application.routes.draw do
       # 職員が自分自身を管理するためのルーティング
       resource :account, except: [ :new, :create, :destroy ] # 職員自身は自分のアカウントを削除・更新・作成できない
       resource :password, only: [ :show, :edit, :update ] # 職員自身がパスワードを変更する
+      
+      # 職員が顧客情報を管理するためのルーティング
+      resouces :customers
     end
   end
 
@@ -25,7 +28,7 @@ Rails.application.routes.draw do
       resources :staff_members do
         resources :staff_events, only: [:index] # 特定の職員の記録を見る
       end
-        resources :staff_events, only: [:index] # すべての職員の記録を見る
+      resources :staff_events, only: [:index] # すべての職員の記録を見る
     end
   end
 
