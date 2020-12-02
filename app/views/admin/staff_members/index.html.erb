@@ -20,8 +20,8 @@
       <% @staff_members.each do |m| %>
         <% p = StaffMemberPresenter.new(m, self) %>
         <tr>
-          <td class="align-middle"><%= m.family_name %> <%= m.given_name %></td>
-          <td class="align-middle"><%= m.family_name_kana %> <%= m.given_name_kana %></td>
+          <td class="align-middle"><%= p.full_name(m.family_name, m.given_name) %></td>
+          <td class="align-middle"><%= p.full_name(m.family_name_kana, m.given_name_kana) %></td>
           <td class="align-middle"><%= m.email %></td>
           <td class="text-center align-middle"><%= m.start_date.strftime("%Y/%m/%d") %></td>
           <td class="text-center align-middle"><%= m.end_date.try(:strftime, "%Y/%m/%d") %></td>

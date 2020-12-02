@@ -3,6 +3,13 @@
 
 <div>
   <%= form_with model: @staff_member, url: :staff_account do |f| %>
+  <% if @staff_member.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger mt-2">
+      <% @staff_member.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </div>
+  <% end %>
     <%= render "form", f: f %>
     <div class="pt-2">
       <%= f.submit "更新", class: "btn btn-primary" %>

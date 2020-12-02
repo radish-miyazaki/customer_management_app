@@ -17,7 +17,7 @@
     <!-- // エラー表示用 -->
 
     <%= markup do |m|
-      p = StaffMemberFormPresenter.new(f, self)
+      p = FormPresenter.new(f, self)
       p.with_options(required: true, class: "form-control") do |q|
         m << q.password_field_block(:current_password, "現在のパスワード")
         m << q.password_field_block(:new_password, "新しいパスワード")

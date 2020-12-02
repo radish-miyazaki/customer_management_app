@@ -9,4 +9,34 @@ class FormPresenter
     @form_builder = form_builder
     @view_context = view_context
   end
+
+  def text_field_block(name, label_text, options = {})
+    markup(:div, class: "form-group") do |m|
+      m << label(name, label_text, class: "ml-2")
+      if options[:required]
+        m.span("必須", class: "badge badge-danger ml-2")
+      end
+      m << text_field(name, options)
+    end
+  end
+
+  def password_field_block(name, label_text, options = {})
+    markup(:div, class: "form-group") do |m|
+      m << label(name, label_text, class: "ml-2")
+      if options[:required]
+        m.span("必須", class: "badge badge-danger ml-2")
+      end
+      m << password_field(name, options)
+    end
+  end
+
+  def date_field_block(name, label_text, options = {})
+    markup(:div, class: "form-group") do |m|
+      m << label(name, label_text, class: "ml-2")
+      if options[:required]
+        m.span("必須", class: "badge badge-danger ml-2")
+      end
+      m << date_field(name, options)
+    end
+  end
 end

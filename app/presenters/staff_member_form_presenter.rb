@@ -1,5 +1,11 @@
 class StaffMemberFormPresenter < FormPresenter
 
+  def password_field_block(name, label_text, options={})
+    if object.new_record?
+      super(name, label_text, options)
+    end
+  end
+
   def full_name_block(name1, name2, label_text, options = {})
     markup(:div, class: "form-group") do |m|
       m << label(name1, label_text, class: "ml-2")
@@ -14,36 +20,6 @@ class StaffMemberFormPresenter < FormPresenter
           m << text_field(name2, options)
         end
       end
-    end
-  end
-
-  def text_field_block(name, label_text, options = {})
-    markup(:div, class: "form-group") do |m|
-      m << label(name, label_text, class: "ml-2")
-      if options[:required]
-        m.span("必須", class: "badge badge-danger ml-2")
-      end
-      m << text_field(name, options)
-    end
-  end
-
-  def password_field_block(name, label_text, options = {})
-    markup(:div, class: "form-group") do |m|
-      m << label(name, label_text, class: "ml-2")
-      if options[:required]
-        m.span("必須", class: "badge badge-danger ml-2")
-      end
-      m << password_field(name, options)
-    end
-  end
-
-  def date_field_block(name, label_text, options = {})
-    markup(:div, class: "form-group") do |m|
-      m << label(name, label_text, class: "ml-2")
-      if options[:required]
-        m.span("必須", class: "badge badge-danger ml-2")
-      end
-      m << date_field(name, options)
     end
   end
 

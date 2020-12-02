@@ -9,4 +9,9 @@ class StaffMemberPresenter < ModelPresenter
     suspected? ? raw("&#x2611;") : raw("&#x2610;")
   end
 
+  # 職員の氏名全体を生成する fn : 姓、 gn : 名
+  def full_name(fn, gn)
+    fn + ' ' + gn
+  end
+
 end
