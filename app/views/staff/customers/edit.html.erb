@@ -1,0 +1,13 @@
+<% @title = "顧客情報の編集" %>
+<h2 class="my-4"><%= @title %></h2>
+
+<div>
+  <%= form_with model: @customer_form, class: "card bg-light px-5 py-2",
+        url: [:staff, @customer_form.customer], scope: "form" do |f| %>
+    <%= render "form", f: f %>
+    <div class="mb-3 ml-3">
+      <%= f.submit "更新", class: "btn btn-primary" %>
+      <%= link_to "キャンセル", :staff_customers, class: "btn btn-danger ml-3" %>
+    </div>
+  <% end %>
+</div>

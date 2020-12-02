@@ -1,0 +1,13 @@
+<%= f.fields_for :customer, f.object.customer do |ff| %>
+  <%= markup do |m|
+    p = CustomerFormPresenter.new(ff, self)
+    p.with_options(required: true, class: "form-control") do |q|
+      m << q.text_field_block(:email, "メールアドレス")
+      m << q.password_field_block(:password, "パスワード")
+      m << q.full_name_block(:family_name, :given_name, "氏名")
+      m << q.full_name_block(:family_name_kana, :given_name_kana, "フリガナ")
+    end
+    m << p.date_field_block(:birthday, "生年月日", class: "form-control")
+    m << p.gender_field_block
+  end %>
+<% end %>

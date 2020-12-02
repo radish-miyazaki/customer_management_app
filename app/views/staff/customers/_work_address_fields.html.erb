@@ -1,0 +1,14 @@
+<%= f.fields_for :work_address, f.object.customer.work_address do |ff| %>
+  <%= markup do |m|
+    p = AddressFormPresenter.new(ff, self)
+    p.with_options(class: "form-control") do |q|
+      m << q.text_field_block(:company_name, "会社名", required: true)
+      m << q.text_field_block(:division_name, "部署名")
+      m << q.postal_code_block(:postal_code, "郵便番号")
+      m << q.drop_down_list_block(:prefecture, "都道府県", Address::PREFECTURE_NAMES)
+      m << q.text_field_block(:city, "市区町村")
+      m << q.text_field_block(:address1, "町域、番地等")
+      m << q.text_field_block(:address2, "建物名、部屋番号等")
+    end
+  end %>
+<% end %>
