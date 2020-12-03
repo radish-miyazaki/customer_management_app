@@ -13,12 +13,16 @@ class Staff::CustomerForm
     (2 - @customer.personal_phones.size).times do
       @customer.personal_phones.build
     end
+
     self.inputs_home_address = @customer.home_address.present?
     self.inputs_work_address = @customer.work_address.present?
     @customer.build_home_address unless @customer.home_address
     @customer.build_work_address unless @customer.work_address
     (2 - @customer.home_address.phones.size).times do
       @customer.home_address.phones.build
+    end
+    (2 - @customer.work_address.phones.size).times do
+      @customer.work_address.phones.build
     end
   end
 
@@ -61,9 +65,19 @@ class Staff::CustomerForm
 
     if inputs_work_address
       customer.work_address.assign_attributes(work_address_params)
+      phones = phone_params(:work_address).fetch(:phones)
+
+      customer.work_address.phones.size.times do |index|
+        attributes = phones[index.to_s]
+        if attributes && attributes[:number].present?
+          customer.work_address.phones[index].assign_attributes(attributes)
+        else
+          customer.work_address.phones[index].mark_for_destruction
+        end
+      end
     else
       customer.work_address.mark_for_destruction
-    end 
+    end
   end
 
   # Strong Parameters
