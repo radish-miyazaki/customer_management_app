@@ -1,7 +1,7 @@
 class Staff::CustomerForm
   include ActiveModel::Model
 
-  attr_accessor :customer
+  attr_accessor :customer, :inputs_home_address, :inputs_work_address
   # 値がDBに保存されているかどうかを真偽値で返すpersisted?メソッドをcustomer属性に委譲
   # persisted?をオーバーライドすることで、form_withによるpersisted?メソッドの呼び出しに対して
   # HTTPメソッドがPOSTに固定されないようにしている。
@@ -10,6 +10,8 @@ class Staff::CustomerForm
   def initialize(customer = nil)
     @customer = customer
     @customer ||= Customer.new(gender: "male")
+    self.inputs_home_address = @customer.home_address.present?
+    self.inputs_work_address = @customer.work_address.present?
     @customer.build_home_address unless @customer.home_address
     @customer.build_work_address unless @customer.work_address
   end
@@ -18,9 +20,24 @@ class Staff::CustomerForm
   def assign_attributes(params = {})
     @params = params
 
+    self.inputs_home_address = params[:inputs_home_address] == "1"
+    self.inputs_work_address = params[:inputs_work_address] == "1"
+
     customer.assign_attributes(customer_params) # フォームで入力された値を顧客の各属性に代入
-    customer.home_address.assign_attributes(home_address_params) # 自宅住所
-    customer.work_address.assign_attributes(work_address_params) # 勤務先
+ 
+    # チェックがオンの時のみオブジェクトに値を割り当てる
+    if inputs_home_address
+      customer.home_address.assign_attributes(home_address_params)
+    else
+      # オフの場合、オブジェクトを削除対象にする
+      customer.home_address.mark_for_destruction
+    end
+ 
+    if inputs_work_address
+      customer.work_address.assign_attributes(work_address_params)
+    else
+      customer.work_address.mark_for_destruction
+    end 
   end
 
   # Strong Parameters
