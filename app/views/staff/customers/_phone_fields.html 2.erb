@@ -1,0 +1,7 @@
+<%= f.fields_for :phones, phone, index: index do |ff| %>
+  <%= markup(:li, class: "pb-2") do |m| 
+    m << ff.text_field(:number, class: "form-control")
+    m << ff.check_box(:primary, class: "form-check-input")
+    m << ff.label(:primary, "優先", class: "form-check-label")
+  end %>
+<% end %>
