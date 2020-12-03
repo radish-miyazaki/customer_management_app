@@ -8,6 +8,11 @@ class Customer < ApplicationRecord
   has_one :home_address, dependent: :destroy, autosave: true
   has_one :work_address, dependent: :destroy, autosave: true
 
+  # CustomerモデルとPhoneモデルを結びつける
+  has_many :phones, dependent: :destroy # 顧客の持つ全ての番号
+  has_many :personal_phones, -> { where(address_id: nil).order(:id) },
+    class_name: "Phone", autosave: true # 顧客個人の番号
+
   # Validation
   validates :gender, inclusion: { in: %w(male female), allow_blank: true}
   validates :birthday, date: {

@@ -2,6 +2,7 @@ class Address < ApplicationRecord
   include StringNormalizer
 
   belongs_to :customer
+  has_many :phones, -> { order(:id) }, dependent: :destroy, autosave: true
 
   # Normalization
   before_validation do

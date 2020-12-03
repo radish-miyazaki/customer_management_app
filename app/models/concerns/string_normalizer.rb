@@ -22,4 +22,9 @@ module StringNormalizer
   def normalize_as_postal_code(text)
     NKF.nkf("-W -w -Z1", text).strip.gsub(/-/, "") if text
   end
+
+  # 電話番号の正規化
+  def normalize_as_phone_number(text)
+    NKF.nkf("-W -w -Z1", text).strip if text
+  end
 end
