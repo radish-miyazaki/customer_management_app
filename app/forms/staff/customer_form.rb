@@ -5,7 +5,7 @@ class Staff::CustomerForm
   # 値がDBに保存されているかどうかを真偽値で返すpersisted?メソッドをcustomer属性に委譲
   # persisted?をオーバーライドすることで、form_withによるpersisted?メソッドの呼び出しに対して
   # HTTPメソッドがPOSTに固定されないようにしている。
-  delegate :persisted?, to: :customer
+  delegate :persisted?, :save,  to: :customer
 
   def initialize(customer = nil)
     @customer = customer
@@ -21,16 +21,6 @@ class Staff::CustomerForm
     customer.assign_attributes(customer_params) # フォームで入力された値を顧客の各属性に代入
     customer.home_address.assign_attributes(home_address_params) # 自宅住所
     customer.work_address.assign_attributes(work_address_params) # 勤務先
-  end
-
-  # フォームから入力された値をDBに保存する
-  def save
-    # トランザクション処理
-    ActiveRecord::Base.transaction do
-      customer.save!
-      customer.home_address.save!
-      customer.work_address.save!
-    end
   end
 
   # Strong Parameters

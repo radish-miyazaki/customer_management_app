@@ -4,6 +4,13 @@
 <div>
   <%= form_with model: @customer_form, class: "card bg-light px-5 py-2",
         url: :staff_customers, scope: "form" do |f| %>
+    <% if @customer_form.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger mt-2">
+        <% @customer_form.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </div>
+    <% end %>
     <%= render "form", f: f %>
     <div class="mb-3 ml-3">
       <%= f.submit "登録", class: "btn btn-info" %>
