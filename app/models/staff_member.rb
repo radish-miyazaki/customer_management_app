@@ -1,26 +1,10 @@
 class StaffMember < ApplicationRecord
 
-  include StringNormalizer
+  include EmailHolder # メールアドレスの正規化&バリデーションファイル
+  include PersonalNameHolder # 名前の正規化＆バリデーションファイル
+  include PasswordHolder # パスワード関連のファイル
 
   has_many :events, class_name: "StaffEvent", dependent: :destroy
-
-  # 正規化
-  before_validation do
-    self.family_name = normalize_as_name(family_name)
-    self.given_name = normalize_as_name(given_name)
-    self.family_name_kana = normalize_as_furigan(family_name_kana)
-    self.given_name_kana = normalize_as_furigan(given_name_kana)
-    self.email = normalize_as_email(email)
-  end
-
-  HUMAN_NAME_REGEXP = /\A[\p{han}\p{hiragana}\p{katakana}\u{30fc}A-Za-z]+\z/
-  KATAKANA_REGEXP = /\A[\p{katakana}\u{30fc}]+\z/
-
-  # 氏名・フリガナのバリエーション
-  validates :family_name, :given_name, presence: true,
-            format: { with: HUMAN_NAME_REGEXP, allow_blank: true }
-  validates :family_name_kana, :given_name_kana, presence: true,
-            format: { with: KATAKANA_REGEXP, allow_blank: true}
 
   # 入社日・退職日のバリデーション
   validates :start_date, presence: true, date: {
@@ -33,20 +17,6 @@ class StaffMember < ApplicationRecord
     before: ->(obj) { 1.year.from_now.to_date },
     allow_blank: true
   }
-
-  # メールアドレスのバリデーション(gem valid_email2を用いる)
-  validates :email, presence: true, "valid_email_2/email": true,
-    uniqueness: { case_sensitive: false }
-
-  # 与えられた文字列をハッシュ化し返す
-  # nilの場合はそのままnilを返す
-  def password=(raw_password)
-    if raw_password.kind_of?(String)
-      self.hashed_password = BCrypt::Password.create(raw_password)
-    elsif raw_password.nil?
-      self.hashed_password = nil
-    end
-  end
 
   # システムへアクセスできるかどうかを調べる
   def active?
